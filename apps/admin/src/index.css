@@ -1,9 +1,5 @@
-@import "tailwindcss";
-@import "tw-animate-css";
-@import "shadcn/tailwind.css";
-@import "@fontsource-variable/inter";
+@import "@workspace/ui/globals.css";
 @import "@fontsource-variable/roboto-slab";
-
 @custom-variant dark (&:is(.dark *));
 
 :root {

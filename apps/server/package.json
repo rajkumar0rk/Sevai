@@ -5,7 +5,12 @@
   "main": "index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon"
+    "dev": "nodemon",
+    "build": "tsc -b && vite build",
+    "lint": "eslint",
+    "format": "prettier --write \"**/*.{ts,tsx}\"",
+    "typecheck": "tsc --noEmit",
+    "preview": "vite preview"
   },
   "keywords": [],
   "author": "rajkumar0rk",
