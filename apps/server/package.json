@@ -2,15 +2,16 @@
   "name": "server",
   "version": "1.0.0",
   "description": "",
-  "main": "index.ts",
+  "main": "dist/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon",
-    "build": "tsc -b && vite build",
-    "lint": "eslint",
-    "format": "prettier --write \"**/*.{ts,tsx}\"",
+    "build": "tsc -p tsconfig.json && tsc-alias -p tsconfig.json",
+    "start": "node dist/server.js",
+    "lint": "eslint .",
+    "format": "prettier --write \"**/*.ts\"",
     "typecheck": "tsc --noEmit",
-    "preview": "vite preview"
+    "clean": "node -e \"require('fs').rmSync('dist',{recursive:true,force:true})\""
   },
   "keywords": [],
   "author": "rajkumar0rk",
@@ -22,12 +23,16 @@
   },
   "devDependencies": {
     "@tsconfig/node24": "^24.0.4",
+    "@eslint/js": "^9.39.4",
     "@types/express": "^5.0.6",
     "@types/node": "^25.6.0",
     "eslint": "^9.39.4",
+    "globals": "^17.2.0",
     "nodemon": "^3.1.14",
     "prettier": "^3.8.3",
     "tsx": "^4.21.0",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.57.1",
+    "tsc-alias": "^1.8.16"
   }
 }
