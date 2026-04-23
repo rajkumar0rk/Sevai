@@ -1,3 +1,12 @@
-import { DATABASE_URL } from "../constants/env.js";
+import mongoose from 'mongoose';
+import { env } from "./env.js";
 
-export const hasDatabaseConfig = DATABASE_URL.length > 0;
+export async function connectDB():Promise<void>{
+  mongoose.set("sanitizeFilter",true)
+  mongoose.connect(env.MONGO_URL,{
+    maxPoolSize:10,
+    serverSelectionTimeoutMS:5000
+  })
+  //logger
+}
+
