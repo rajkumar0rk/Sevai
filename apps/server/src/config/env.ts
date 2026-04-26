@@ -1,4 +1,4 @@
-import z from 'zod';
+import{ z } from 'zod';
 
 const envSchema=z.object({
   NODE_ENV:z.enum(["development","test","production"]),
@@ -6,16 +6,26 @@ const envSchema=z.object({
   MONGO_URL:z.string().url(),
   REDIS_URL:z.string().url(),
   JWT_SECRET:z.string().min(32),
-  JWT_EXPIRES_IN:z.string().default("15m"),
+  JWT_EXPIRES_IN: z
+      .string()
+      .regex(/^\d+[smhd]$/, "Invalid format (e.g. 15m, 1h, 7d)")
+      .default("15m"),
   COOKIE_SECRET:z.string().min(32),
-  ALLOWED_ORIGINS:z.string().transform(s=>s.split(","))
-})
+  ALLOWED_ORIGINS:z
+  .string()
+  .transform((s) => s.split(",").map((v) => v.trim()))
+  .pipe(z.array(z.string().url()))
+}).strict();
 
 const parsed= envSchema.safeParse(process.env);
 
 if(!parsed.success){
-  console.error("Invalid environment variable:", parsed.error.format());
+  console.error("Invalid environment variable:");
+  console.error(parsed.error.issues);
   process.exit(1)
 }
 
-export const env = parsed.data
+ const env = Object.freeze(parsed.data)
+
+ export type Env=z.infer<typeof envSchema>
+export default env
