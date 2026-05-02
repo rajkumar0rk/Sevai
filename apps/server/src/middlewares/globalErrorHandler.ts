@@ -9,7 +9,7 @@ export const globalErrorHandler = (
   err: unknown,
   req: Request,
   res: Response,
-) => {
+):void => {
   let statusCode = 500;
   let message = "Internal Server Error"
   let code: ErrorCode = ERROR_CODES.INTERNAL_ERROR
@@ -44,12 +44,10 @@ export const globalErrorHandler = (
   if (err instanceof Error) {
     message = err.message
   }
-  res.status(statusCode).json({
-    success: false,
+
+  res.error({
     code,
     message,
-    ...(process.env.NODE_ENV === "development" && {
-      stack: err instanceof Error ? err.stack : undefined
-    })
-  })
+    stack: err instanceof Error ? err.stack : undefined
+  },statusCode)
 }
