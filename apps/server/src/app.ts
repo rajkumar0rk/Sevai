@@ -8,6 +8,7 @@ import {pinoHttp} from 'pino-http'
 
 import { globalErrorHandler } from './middlewares/globalErrorHandler.js';
 import env from './config/env.js';
+import { globalLimiter } from './middlewares/rateLimiter.js';
 import { logger } from './utils/logger.js';
 
 const app = express();
@@ -33,6 +34,7 @@ app.use(hpp())
 app.use(pinoHttp({logger}))
 
 // Rate limiting
+app.use(globalLimiter)
 
 // Routes
 app.use("/api/v1/")
