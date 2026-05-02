@@ -4,9 +4,11 @@ import cors from 'cors'
 import cookieParser from 'cookie-parser'
 import mongoSanitize from 'express-mongo-sanitize'
 import hpp from 'hpp'
+import {pinoHttp} from 'pino-http'
 
 import { globalErrorHandler } from './middlewares/globalErrorHandler.js';
 import env from './config/env.js';
+import { logger } from './utils/logger.js';
 
 const app = express();
 
@@ -28,6 +30,7 @@ app.use(mongoSanitize())
 app.use(hpp())
 
 // Observability
+app.use(pinoHttp({logger}))
 
 // Rate limiting
 
